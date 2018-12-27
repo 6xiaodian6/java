@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js测试页面</title>
+
+    <script>
+        //javascript里面的语句既可以在每句结尾之后添加分号也可以不添加分号
+
+        //test write
+        document.write("<H1>This is a heading</H1>");
+        //test button
+        function myFunction() {
+            x=document.getElementById("demo");
+            x.innerHTML="内容已经成功改变";
+        }
+        function changeImage() {
+            element=document.getElementById("myImage");
+            if (element.src.match("eg_bulboff.gif"))
+            {
+                element.src="eg_bulbon.gif";
+            }
+            else
+            {
+                element.src="eg_bulboff.gif";
+            }
+            setTimeout('changeImage()',500)
+        }
+        function changeStyle() {
+            x=document.getElementById("style")
+            x.style.color="#ff0000";
+            x.style.fontSize="30px";
+        }
+        function testNum() {
+            var x=document.getElementById("numtext").value;
+            if (x==""||isNaN(x)){
+                alert("输入的不是数字");
+            }
+        }
+        </script>
+    <script>
+        function inserText() {
+            document.getElementById("insert").innerHTML="数据插入成功";
+        }
+        function clearContent() {
+            document.write("页面已被清空");
+        }
+        function showTime(id){
+            id.innerHTML="事件触发成功";
+            alert("当前时间是："+Date());
+        }
+        function load() {
+            alert(Date());
+        }
+        function changeUpper() {
+            var x=document.getElementById("fname");
+            x.value=x.value.toUpperCase();
+        }
+        function mOver(obj){
+            obj.innerHTML="谢谢配合"
+        }
+        function mOut(obj){
+            obj.innerHTML="把鼠标移动到上面"
+        }
+        function mDown(id){
+            id.style.backgroundColor="#1ec5e5";
+            id.innerHTML="请释放鼠标"
+        }
+        function mUp(id){
+            id.style.backgroundColor="blue";
+            id.innerHTML="请按下鼠标按钮";
+        }
+        function openNew() {
+            window.open();
+            document.write("主机名："+location.hostname+"<br>"
+                +"路径："+location.pathname+"<br>"
+                +"端口号："+location.port+"<br>"
+                +"协议："+location.protocol+"<br>"
+                +"当前页面的完整URL："+location.href+"<br>"
+                +"URL的路径名："+location.pathname)
+        }
+        function newPage() {
+            window.location.assign("http://www.w3school.com.cn/js/js_window_location.asp")
+        }
+        function goForward(){
+            window.history.forward();
+        }
+        function browInfo(){
+            alert("浏览器名字："+navigator.appCodeName+"浏览器名字："+navigator.appName+"浏览器版本："+navigator.appVersion+"Cookie是否可用:"+navigator.cookieEnabled+"浏览器平台："+navigator.platform+"用户代理："+navigator.userAgent+"浏览器语言："+navigator.languages);
+        }
+        function toConfirm() {
+            confirm("我是确认框！！！");
+        }
+        function toPrompt() {
+            prompt("我是提示框！！！","这个位置是显示提示框的内容的");
+        }
+        // c_name是cookie的名字，value是cookie的值，可以直接从输入框里面获取，expiredays是保存的天数
+        function setCookie(c_name,value,expiredays){
+            var exdate=new Date();
+            exdate.setDate(exdate.getDate()+expiredays);
+            document.cookie=c_name+"="+decodeURI(value)+((expiredays==null)?"":";expires="+exdate.toUTCString());
+
+        }
+        function getCookie(c_name){
+            if(document.cookie.length>0){
+                var c_start=document.cookie.indexOf(c_name+"=");
+                if (c_start!=-1){
+                    c_start=c_start+c_name.length+1;
+                 var  c_end=document.cookie.length;
+                    return unescape(document.cookie.substring(c_start,c_end))
+                }
+            }
+            return "";
+        }
+        function checkCookie() {
+            var username=getCookie('username');
+            if (username!=null && username!="")
+                alert('welcome again '+username+'!')
+            else{
+                username=prompt('Please enter your name:',"")
+                if (username!=null && username!="")
+                    setCookie('username',username,365)
+            }
+        }
+        function writeText(txt){
+            document.getElementById("desc").innerHTML=txt;
+        }
+        function newObj(firstname,lasename,age,eyecolor){
+            this.firstname=firstname;
+            this.lastname=lasename;
+            this.age=age;
+            this.eyecolor=eyecolor;
+        }
+        function newOb() {
+            var person=new newObj("John","Adams",35,"black");
+            var txt="输出的个人信息："+"姓氏："+person.firstname+"名字："+person.lastname+"年龄："+person.age+"眼睛颜色："+person.eyecolor;
+            document.getElementById("obj").innerHTML=txt;
+        }
+    </script>
+    <script>
+        function startTime(){
+            var today=new Date();
+            var h=today.getHours();
+            var m=today.getMinutes();
+            var s=today.getSeconds();
+            m=checkTime(m);
+            s=checkTime(s);
+            document.getElementById("time").innerHTML="当前时间是："+h+":"+m+":"+s;
+            setTimeout('startTime()',500);
+            function checkTime(time) {
+                if(time<10)
+                    time="0"+time;
+                    return time;
+            }
+        }
+    </script>
+    <!--jquery框架的引用的javascript脚本-->
+    <script src="jquery-1.12.4.js"></script>
+    <!--以下是jquery方式的执行脚本-->
+    <script>
+        function jqueryTest(){
+            $("#h01").attr("style","color:red").html("Hello jQuery");
+        }
+        $(document).ready(jqueryTest);
+        function testjQuery() {
+            if (typeof $ =='undefined'){
+               // window.alert("没有定义jQuery");
+                window.alert(typeof jQuery);
+            }
+            else
+                window.alert("定义了jQuery");
+        }
+    </script>
+</head>
+<!--进入页面时触发的事件onload,必须要加在body上面-->
+<body onload="startTime()"> <!--<body onload="load()">-->
+<div id="clock" style="float: right;color: red; background-color: aqua; height: 50px;width: 160px; text-align: center;align-content: center">
+    <p id="time"></p>
+</div>
+<!--可以直接在JAVAScript里面对HTML的整体的DIV属性进行-->
+<p>JS测试页面</p>
+---------------------------------------------------------------------
+<h1>我的第二段 JavaScript</h1>
+<p>
+    JavaScript 能够对事件作出反应，比如按钮的点击；
+</p>
+<button type="button" onclick="alert('Welcome!')">点击这里测试按钮</button><p></p>
+---------------------------------------------------------------------
+<p id="demo">
+    JavaScript 能改变 HTML 元素的内容。
+</p>
+<button type="button" onclick="myFunction()">改变内容测试</button><p></p>
+---------------------------------------------------------------------
+<p>点击灯泡来点亮或熄灭这盏灯</p>
+<img id="myImage" onclick="changeImage()" src="eg_bulboff.gif"><p></p>
+---------------------------------------------------------------------
+<p>改变字体的大小和颜色</p>
+<p id="style" >
+    改变颜色大小测试
+</p>
+<button type="button" onclick="changeStyle()">点击改变颜色</button><p></p>
+---------------------------------------------------------------------
+<p>请输入数字，如果输入值不是数字，浏览器会弹出提示框</p>
+<input id="numtext" type="text">
+<button type="button" onclick="testNum()">点击验证</button>
+<button id="insert" onclick="inserText()">点击插入文本</button><p></p>
+<button id="clear" type="button" onclick="clearContent()" style="height: 80px ;width: auto;background-color: #ff0000;font-size: 50px;">清空页面内容</button><br>
+---------------------------------------------------------------------
+<!--DOM(文档对象模型)就是HTML页面的布局模型，是HTML里面的所有的文档、标签以及其他的所有属性都是可以通过DOM模型来进行操作的-->
+    <!--第一种触发事件，即直接在属性框里面设置触发事件-->
+<h1 onclick="this.innerHTML='触发事件成功<br>现在时间是:'+Date()">请点击文本</h1>
+    <!--第二种触发事件就是使用script函数来进行事件的触发-->
+<h1 onclick="showTime(this)">请点击文本显示当前的时间</h1>
+    <!--使用DOM来进行事件的分配-->
+<button id="myBtn">点击这里你会发现惊喜</button>
+<script>
+    //这段js脚本必须放在这里才能生效，放在最上面的script里面是不会生效的，已经做过试验了
+    document.getElementById("myBtn").onclick=function() {displayDate()}
+    function displayDate(){
+        alert(Date());
+    }
+</script><br/>
+---------------------------------------------------------------------<br>
+<!--大小写字符自动转换-->
+请输入英文字符
+<input type="text" id="fname" onchange="changeUpper()">
+<p>当您离开时，会触发输入文本的的大小写转换</p>
+---------------------------------------------------------------------<br>
+<div onmouseover="mOver(this)" onmouseout="mOut(this)" style="background-color: green;width: 120px;height: 20px;padding: 40px;color: #ff0000;">把鼠标移动到上面</div>
+<div onmousedown="mDown(this)" onmouseup="mUp(this)" style="background-color: blue;width: 120px;height: 20px;padding: 40px;color: #efff00;">点击这里测试</div>
+---------------------------------------------------------------------<br>
+<p id="open" onclick="openNew()">点我打开新窗口</p>
+<input type="button" value="加载学习文档" onclick="newPage()">
+<input type="button" value="转到下一页" onclick="goForward()">
+<p id="browInfo" onclick="browInfo()">获取浏览器信息</p>
+<p id="confirm" onclick="toConfirm()">点我查看确认框样式</p>
+<p id="prompt" onclick="toPrompt()">点我查看提示框样式</p>
+---------------------------------------------------------------------<br>
+<p onclick="checkCookie()">点我查看cookie的设置的值</p><!--这个方法是直接设置和获取cookie值的，默认保存365天,这个方法默认是直接在页面加载的时候就被加载进去的，可以类似的从用户登录系统的时候记录用户名，然后再在本页面进行展示，但不要有请输入什么的提示，方法可改为调用不同展示页面或模块-->
+---------------------------------------------------------------------<br>
+<h1 id="h01" onclick="testjQuery()">测试jQuery是否引用成功</h1>
+---------------------------------------------------------------------<br>
+<img src="eg_planets.jpg" width="215px" height="260px" border="0" usemap="planetmap" alt="Planets"/>
+<map name="planetmap" id="planetmap">
+<area shape="circle" coords="180,139,14" onmouseover="writeText('直到 20 世纪 60 年代，金星一直被认为是地球的孪生姐妹，因为金星是离我们最近的行星，同时还由于两者拥有很多共同的特征。')" href="venus.html" target="_blank" alt="Venus">
+<area shape="circle" coords="129,161,10" onmouseover="writeText('从地球上是很难研究水星的，这是由于它和太阳的距离总是很近。')" href="mercur.html" target="_blank" alt="Mercury">
+<area shape="rect" coords="0,0,110,260" onmouseover="writeText('太阳和类似木星这样的气态行星是到目前为止太阳系中最大的物体。')" href="sun.html" target="_blank" alt="Sun">
+</map>
+<p id="desc"></p>
+---------------------------------------------------------------------<br>
+<p id="obj" onclick="newOb()">对象的创建</p>
+---------------------------------------------------------------------<br>
+</body>
+</html>
