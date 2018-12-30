@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>js测试页面</title>
-
     <script>
         //javascript里面的语句既可以在每句结尾之后添加分号也可以不添加分号
 
@@ -250,5 +249,95 @@
 ---------------------------------------------------------------------<br>
 <p id="obj" onclick="newOb()">对象的创建</p>
 ---------------------------------------------------------------------<br>
+<div id="jquery0" style="height: auto; width: 1880px; background-color: green">
+<p><h1>以下JQuery的内容展示</h1></p>
+<p>点击我就会消失</p>
+<p>点我也会消失</p>
+<p>我也一样</p>
+    <p id="hide0">这是ID隐藏的元素</p>
+    <!--这里class-->
+    <p class="hide1" onclick="classHide()" >这是CLASS隐藏的元素</p>
+    <p class="hide2" onclick="classHide2()">这是对多级元素进行精确定位</p>
+    <h1 class="hide1" onclick="classHide2()">这是对H元素的定位</h1>
+    <p id="show">这是显示元素的操作</p>
+    <div id="fade1" style="width: 100px;display: none;height: 100px;background-color: #efff00;"><br></div>
+    <div id="fade2" style="width: 100px;height: 100px;background-color: aqua"><br></div>
+    <div id="fade3" style="width: 100px;height: 100px;background-color: rebeccapurple"><br></div>
+    <button id="show2">点击这里，使矩形淡入</button>
+    <button id="show3">点击这里，使矩形淡出</button>
+    <button id="show4">点击这里，使矩形出去回来</button>
+    <button id="show5">点击这里，使矩形颜色变淡</button>
+    <div id="slide" style="width: 300px;height: auto;">
+        <div id="slide1" style="height: auto;width: 300px;background-color: #efff00;text-align: center;border: solid 2px">
+            点击这里显示励志内容
+        </div>
+        <div id="slide2" style="height: 100px;width: 300px;background-color: #efff00;text-align: center;line-height: 30px; border: solid 2px;display: none">
+            人生就是不断犯错和改错的过程，多吃苦，以后就会习惯的
+        </div>
+    </div>
+    <div style="height: 200px;width: 800px; background-color: blue">
+        <div id="animate" style="background-color: rebeccapurple;height: 200px;width: 200px;position: absolute">看我是会跑的哦</div>
+        <br><button id="animate1" style="position: absolute; float: end">开始动画</button>
+    </div>
+    <p id="p1">好玩的jQuery 乐趣十足</p><button id="p2">点击这里</button>
+</div>
+<script>
+    // (document).ready函数是当文档加载完之后才运行jQuery代码，否则可能出现失败
+    $(document).ready(function (){
+        //尽量不要用这种P标签的批量操作，否则就会对其他的效果造成影响
+        $("p").click(function (){
+            $(this).hide(1000);//hide(参数)是隐藏内容的速度，是个比较好看的效果
+        });
+    });
+    $(document).ready(function () {
+        $("button#hide0").click(function () {
+            $("#hide0").hide();
+        });
+    });
+    function classHide() {
+        $("p.hide1").hide();
+    }
+    function classHide2() {
+        $("p.hide2").css("background-color","red");
+        // $("div#intro .head").css("background-color","red");意思是选择id=intro的div元素中的所有的class=head的元素
+    }
+    $("p#show").click(function () {
+        $("p").toggle(1000);
+    });
+    //特效展示
+    $("button#show2").click(function () {
+        $("div #fade1").fadeIn("slow");
+        $("div #fade2").fadeIn(2000);
+        $("div #fade3").fadeIn(3000);
+    });
+    $("button#show3").click(function () {
+        $("div #fade1").fadeOut("slow");
+        $("div #fade2").fadeOut(2000);
+        $("div #fade3").fadeOut(3000);
+    });
+    $("button#show4").click(function () {
+        $("div #fade1").fadeToggle(1000);
+        $("div #fade2").fadeToggle(2000);
+        $("div #fade3").fadeToggle(3000);
+    });
+    $("button#show5").click(function () {
+        $("div #fade1").fadeTo("slow",0.15);
+        $("div #fade2").fadeTo("slow",0.4);
+        $("div #fade3").fadeTo("slow",0.7);
+    });
+    $("div #slide1").click(function () {
+        $("div #slide2").slideToggle();
+    });
+    $("button#animate1").click(function () {
+        $("div#animate").animate({left:'600px'},4000);
+        $("div#animate").animate({fontSize:'3em'},4000);
+    });
+    $(document).ready(function () {
+        $("button#p2").click(function () {
+                $("p#p1").css("color","red").slideUp(2000).slideDown(2000);
+        })
+
+    });
+</script>
 </body>
 </html>
