@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>js测试页面</title>
@@ -251,9 +251,9 @@
 ---------------------------------------------------------------------<br>
 <div id="jquery0" style="height: auto; width: 1880px; background-color: green">
 <p><h1>以下JQuery的内容展示</h1></p>
-<p>点击我就会消失</p>
-<p>点我也会消失</p>
-<p>我也一样</p>
+<p id="0">点击我就会消失</p>
+<p id="1">点我也会消失</p>
+<p id="2">我也一样</p>
     <p id="hide0">这是ID隐藏的元素</p>
     <!--这里class-->
     <p class="hide1" onclick="classHide()" >这是CLASS隐藏的元素</p>
@@ -281,11 +281,40 @@
     </div>
     <p id="p1">好玩的jQuery 乐趣十足</p><button id="p2">点击这里</button>
 </div>
+<div id="Ajax" style="background-color: aqua;height: auto;width: 1880px;">
+    <h2 id="Ajax1">这里是Ajax的内容</h2>
+    <h2 id="Ajax2">点击我可以查看Ajax外部引用的文件</h2>
+    <h2 id="Ajax4">使用Ajax来改变文本</h2>
+    <button id="Ajax3">获取外部内容</button>
+    <div id="Ajax6">通过Ajax改变文本的内容</div>
+    <button id="Ajax5" type="button">改变内容</button>
+</div>
+<div id="JSON" style="width: 1880px; height: auto; background-color: #efff00 ">
+    <h2>以下是JSON的内容</h2>
+    <p id="json0">点击这里填写下的内容</p>
+    <p>
+        Name:<span id="json1"></span></br>
+        Age:<span id="json2"></span></br>
+        Address:<span id="json3"></span></br>
+        Phone:<span id="json4"></span></br>
+    </p>
+    <h4 id="json5">以下是JSON创建的文本变为对象的使用</h4>
+    <p>
+        firstName:<span id="json6"></span></br>
+        lastName:<span id="json7"></span></br>
+    </p>
+</div>
 <script>
     // (document).ready函数是当文档加载完之后才运行jQuery代码，否则可能出现失败
     $(document).ready(function (){
         //尽量不要用这种P标签的批量操作，否则就会对其他的效果造成影响
-        $("p").click(function (){
+        $("p#0").click(function (){
+            $(this).hide(1000);//hide(参数)是隐藏内容的速度，是个比较好看的效果
+        });
+        $("p#1").click(function (){
+            $(this).hide(1000);//hide(参数)是隐藏内容的速度，是个比较好看的效果
+        });
+        $("p#2").click(function (){
             $(this).hide(1000);//hide(参数)是隐藏内容的速度，是个比较好看的效果
         });
     });
@@ -335,9 +364,89 @@
     $(document).ready(function () {
         $("button#p2").click(function () {
                 $("p#p1").css("color","red").slideUp(2000).slideDown(2000);
-        })
-
+        });
     });
+    // Ajax部分内容
+    // $(selector).load(url,data,callback);  slector是选择器，load里面的url是希望加在的url，data是可选参数是与请求一起发送的查询字符串键/值对集合，callback是load加载完成之后所执行的函数名称
+    $("h2#Ajax2").click(function () {
+        $("h2#Ajax2").load('ajax_out.txt');
+    });
+    $("button#Ajax3").click(function () {
+        $("h2#Ajax4").load("ajax_out.txt",function (responseTxt,statusTxt,xhr) {
+            if (statusTxt=="success") alert("外部文件加载成功！！");
+            if (statusTxt=="error") alert("Error:"+xhr.status+":"+xhr.statusText);
+        });
+    });
+    //ajax实例
+    $(document).ready(function () {
+       $("#Ajax5").click(function () {
+           var htmlobj = $.ajax({url:"ajax_out.txt",
+                                 async:false});
+           $("#Ajax6").html(htmlobj.responseText);
+       });
+    });
+    /*
+
+    $.ajax({
+           url:"../data/test.txt",
+           contentType:"application/json",
+           type:"POST",
+           cache:false,
+           async:true,
+           beforeSend:function(){
+               $('#queryForm').hide();
+           },
+           success:function(result){
+               obj=result;
+           },
+           complete:function(){
+           }
+       });
+       1. async:true,这种情况为异步方式，当ajax发送请求前，
+       会先执行ajax块中beforeSend里面的代码，如果beforeSend里面有DOM操作，
+       就可以立即对DOM进行渲染，当ajax发送请求后，在等待server端返回的数据的过程中，
+       程序会继续执行ajax块外面的代码，直到服务器返回正确的结果才会去执行success的方法。
+       因此，在执行success前DOM隐藏且obj=0。
+       2.async:false,这时ajax的请求是同步的。这样的话，当ajax发送请求前，
+       会先执行ajax块中beforeSend里面的代码，如果beforeSend里面有DOM操作，
+       不会立即对DOM进行渲染，而是等到complete执行完之后，才会渲染DOM，
+       当ajax发送请求后只有ajax请求成功之后，才会执行ajax块外面的js代码。
+       因此，在执行完complete之后DOM才隐藏且obj=result。
+
+       作者：mu910827
+       来源：CSDN
+       原文：https://blog.csdn.net/mu910827/article/details/80747901
+    */
+    //以下是json的内容，json就是JavaScript Object Notation即js对象表示法
+
+    /*
+    优点：json是存储和交换文本信息的语法类似于XML，但是他却比XML更小,更快,更易解析,并且他是独立于语言和平台的，
+    并且支持许多不同的编程语言，而且json能够使用内建的eval()函数来生成js对象
+     */
+
+    $(document).ready(function () {
+        $("#json0").click(function () {
+            var JSONObject = {
+                "name": "Bill Gates",
+                "street": "Fifth Avenue New York 888",
+                "age": 56,
+                "phone": "555 1234567"
+            };
+            $("#json1").html(JSONObject.name);
+            $("#json2").text(JSONObject.street);
+            $("#json3").html(JSONObject.age);
+            $("#json4").html(JSONObject.phone);
+        });
+        $("#json5").click(function () {
+            var txt =
+                '{"emp": [{"firstName":"Bill","lastName":"Gates"},{"firstName":"George","lastName":"Bush"}]}';
+            var obj = JSON.parse(txt);  //现在js使用的文本转换为JSON对象
+            // var obj = eval("("+txt+")");  //较早时期使用的文本转换成对象，存在一定的安全问题
+            $("#json6").html(obj.emp[1].firstName);
+            $("#json7").html(obj.emp[1].lastName);
+        });
+    });
+
 </script>
 </body>
 </html>
