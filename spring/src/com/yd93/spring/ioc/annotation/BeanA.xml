@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--声明开启注解的方式有两种，选择其中一种就可以，第一种是比较早的使用，第二种是最新的使用-->
+
+    <!--第一种注解开启方式-->
+    <context:annotation-config/>
+    <!--第二种注解开启方式-->
+    <!--<context:component-scan base-package="com.yd93.spring"/>-->
+
+    <!--对方法和属性进行注释即@Required-->
+    <bean id="student" class="com.yd93.spring.ioc.annotation.Student">
+        <property name="name" value="Zara"/>
+        <property name="age" value="18"/>
+    </bean>
+
+    <!--对方法和属性进行详细的注释操作即@Autowired-->
+    <bean id="textEditor" class="com.yd93.spring.ioc.annotation.TextEditor"></bean>
+    <bean id="spellChecker" class="com.yd93.spring.ioc.annotation.SpellChecker"></bean>
+
+    <!--对于相同类型的Bean进行的注解即用@Qualifier注解-->
+    <bean id="profile" class="com.yd93.spring.ioc.annotation.Profile"></bean>
+    <bean id="student1" class="com.yd93.spring.ioc.annotation.Student">
+        <property name="name" value="Jack"/>
+        <property name="age" value="28"/>
+    </bean>
+    <!--JSR-250注解-->
+    <bean id="helloWorld" class="com.yd93.spring.ioc.annotation.HelloWorld" init-method="init"
+          destroy-method="destroy">
+        <property name="message" value="Hello World"/>
+    </bean>
+
+
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--自动装配模式必须有构造函数才能执行,这些通过不同的模式针对同一个类只能采取一种方式进行装配,因为不同的装配方式对构造函数的要求不一样,所以不共存-->
+
+    <!--使用自动装配byName进行的注入-->
+    <!--<bean id="textEditor1" class="TextEditor" autowire="byName">-->
+        <!--&lt;!&ndash;配置为自动装配属性之后，spring将自动尝试将他自己属性与配置文件中定义为相同名称的beans进行匹配和连接，如果找到匹配项他将注入这些beans&ndash;&gt;-->
+        <!--<property name="name" value="Generic Text Editor"/>-->
+    <!--</bean>-->
+
+    <!--使用自动装配为byType进行的注入-->
+    <!--<bean id="textEditor2" class="TextEditor" autowire="byType">-->
+        <!--<property name="name" value="Generic Text Editor"/>-->
+    <!--</bean>-->
+
+    <!--通过构造函数自动装配进行注入-->
+    <bean id="textEditor" class="com.yd93.spring.ioc.autowire.TextEditor" autowire="constructor">
+        <constructor-arg value="Generic Text Editor"/>
+     </bean>
+    <!--这里是textEditor自动装入的属性，即将给注入到textEditor类中的属性，然后spring会自动扫描这个属性，并和xml配置文件中相同的bean中的id进行匹配，这就完成了依赖注入-->
+    <bean id="spellChecker" class="com.yd93.spring.ioc.autowire.SpellChecker">
+    </bean>
+
+</beans>

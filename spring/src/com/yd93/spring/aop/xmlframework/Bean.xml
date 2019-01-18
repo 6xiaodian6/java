@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:config>
+        <aop:aspect id="log" ref="logging">
+            <aop:pointcut id="selectAll" expression="execution(* com.yd93.spring.aop.xmlframework.*.*(..))"/>   <!--这里的包路径必须指定到详细的类的包下才行，否则会影响切面点的执行-->
+            <aop:before pointcut-ref="selectAll" method="beforeAdvice"/>
+            <aop:after pointcut-ref="selectAll" method="afterAdvice"/>
+            <aop:after-returning pointcut-ref="selectAll" returning="retVal"
+                    method="afterReturningAdvice"/>
+            <aop:after-throwing pointcut-ref="selectAll" throwing="ex"
+                    method="afterThrowingAdvice"/>
+        </aop:aspect>
+    </aop:config>
+    <bean id="student" class="com.yd93.spring.aop.xmlframework.Student">
+        <property name="name" value="Jack"/>
+        <property name="age" value="11"/>
+    </bean>
+    <bean id="logging" class="com.yd93.spring.aop.xmlframework.Logging"/>
+</beans>

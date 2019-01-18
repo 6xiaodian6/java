@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--默认的初始化和销毁方法-->
+    <!--default-init-method="init" default-destroy-method="destroy">-->
+    <!--一个简单的Bean定义-->
+    <!--<bean id="..." class="...">-->
+        <!--&lt;!&ndash;配置和设置Bean去的地方&ndash;&gt;-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;带有延迟初始化的bean，告诉Ioc容器他在第一次被请求时创建而不是启动时创建&ndash;&gt;-->
+    <!--<bean id="..." class="..." lazy-init="true">-->
+        <!--&lt;!&ndash;配置和设置Bean去的地方&ndash;&gt;-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;在bean的所有必须的属性被设置之后，调用回调方法&ndash;&gt;-->
+    <!--<bean id="..." class="..." init-method="...">-->
+        <!--&lt;!&ndash;配置和设置Bean去的地方&ndash;&gt;-->
+    <!--</bean>-->
+    <!--&lt;!&ndash;当包含该bean的容器被销毁时，使用回掉方法&ndash;&gt;-->
+    <!--<bean id="..." class="..." destroy-method="...">-->
+        <!--&lt;!&ndash;配置和设置Bean去的地方&ndash;&gt;-->
+    <!--</bean>-->
+
+    <bean id="helloWorld" class="com.yd93.spring.ioc.test.HelloWorld" init-method="init" destroy-method="destroy"><!--scope属性默认是prototype，也就是多实例,但是加上该属性之后关闭服务器之后他不会执行销毁的方法-->
+        <property name="message" value="Hello World!"/>
+    </bean>
+    <bean id="helloworld2" class="com.yd93.spring.ioc.test.HelloWorld2">
+        <property name="message1" value="Hello World"/>
+        <property name="message2" value="Hello Second World"/>
+    </bean>
+    <bean id="helloIndia" class="com.yd93.spring.ioc.test.HelloIndia" parent="helloworld2">
+        <property name="message1" value="Hello India!"/>
+        <property name="message3" value="Namaste India!"/>
+    </bean>
+    <bean class="com.yd93.spring.ioc.test.InitHelloWorld"/>
+
+    <!--这是构造函数设置依赖注入-->
+    <!--<bean id="textEditor" class="TextEditor">-->
+        <!--&lt;!&ndash;根据这里的ref找到下面的Bean然后找到他所属的类，即获取这个类里面的构造方法然后被此处的类所用&ndash;&gt;-->
+        <!--<constructor-arg ref="spellChecker"/>-->
+    <!--</bean>-->
+    <!--<bean id="spellChecker" class="SpellChecker">-->
+    <!--</bean>-->
+
+    <!--这是依赖设值函数的依赖注入-->
+    <!--<bean id="textEditor" class="TextEditor">-->
+        <!--&lt;!&ndash;这里的name对应于SpellChecker中的setSpellChecker方法，这里的ref就是下面的Bean的ID值，充当的是一个名字的作用&ndash;&gt;-->
+        <!--<property name="spellChecker" ref="spellChecker"/>-->
+    <!--</bean>-->
+    <!--<bean id="spellChecker" class="SpellChecker"></bean>-->
+
+    <!--这是使用内部Bean为基于setter进行的依赖注入-->
+    <bean id="textEditor" class="com.yd93.spring.ioc.di.TextEditor">
+        <property name="spellChecker">
+            <bean id="spellChecker" class="com.yd93.spring.ioc.di.SpellChecker"/>
+        </property>
+    </bean>
+    <!--这是对集合进行依赖的注入-->
+    <bean id="javaCollection" class="com.yd93.spring.ioc.di.JavaCollection">
+        <property name="addressList">
+            <list>
+                <value>China</value>
+                <value>Pakistan</value>
+                <value>USA</value>
+                <value>Asia</value>
+            </list>
+        </property>
+        <property name="addressSet">
+            <set>
+                <value>China</value>
+                <value>Pakistan</value>
+                <value>USA</value>
+                <value>Asia</value>
+            </set>
+        </property>
+        <property name="addressMap">
+            <map>
+                <entry key="1" value="China"/>
+                <entry key="2" value="Pakistan"/>
+                <entry key="3" value="USA"/>
+                <entry key="4" value="Asia"/>
+            </map>
+        </property>
+        <property name="addressProp">
+            <props>
+                <prop key="one">Pakistan</prop>
+                <!--这里的prop参数并不是按照书写的顺序进行输出的，他的顺序是由properties内部的排序方式决定的，所以输出顺序不是我们想象中的模样-->
+                <prop key="two">China</prop>
+                <prop key="three">USA</prop>
+                <prop key="four">Asia</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="helloWorld" class="com.yd93.spring.ioc.application_event.HelloWorld">
+        <property name="message" value="Hello World!!"/>
+    </bean>
+
+    <bean id="cStartEventHandler" class="com.yd93.spring.ioc.application_event.CStartEvenHandler"/>
+    <bean id="cStopEventHandler" class="com.yd93.spring.ioc.application_event.CStopEventHandler"/>
+</beans>
