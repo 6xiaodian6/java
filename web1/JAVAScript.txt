@@ -1,4 +1,0 @@
-learn javaScript from W3school
-date: 
-	from 2018-12-24 8:30
-	to   2018-12-26	14:30
