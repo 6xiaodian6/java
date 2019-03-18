@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring_mybatis.StudentMapper">
+    <!--为了返回list而定义的resultMap-->
+    <resultMap id="resultStudent" type="Student">
+        <id property="id" column="id"/>
+        <id property="name" column="name"/>
+        <id property="age" column="age"/>
+        <id property="gender" column="gender"/>
+        <id property="address" column="address"/>
+    </resultMap>
+    <!--student联合mark查询方法的配置（多对一的方式）-->
+    <resultMap id="resultStudentMarks" type="Mark">
+        <id property="mark" column="mark"/>
+        <result property="year" column="year"/>
+        <result property="sid" column="sid"/>
+        <association property="student" javaType="Student">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+            <result property="gender" column="gender"/>
+            <result property="address" column="address"/>
+        </association>
+    </resultMap>
+    <select id="getStudentMarks" parameterType="int" resultMap="resultStudentMarks">
+        SELECT S.*,M.*
+        FROM student S,mark M
+        WHERE S.id=M.sid AND S.id=#{id}
+    </select>
+    <select id="getStudentById" resultMap="resultStudent" parameterType="int">
+        SELECT *
+        FROM student
+        WHERE id=#{id}
+    </select>
+</mapper>

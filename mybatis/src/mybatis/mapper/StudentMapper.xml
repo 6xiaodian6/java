@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace是标志查询语句的唯一标识，一般都是包名+文件的名称即（StudentMapper.xml去掉xml就是了）-->
+<mapper namespace="mybatis.mapper.StudentMapper">
+    <!--select标签的ID值必须是唯一的，parameterType是参数类型，就是#{}里面的参数类型，resultType是返回值的封装类，最好也是包名+类名，避免找错类-->
+    <select id="get" parameterType="int" resultType="mybatis.model.Student">
+        select * from student where id = #{id}
+    </select>
+</mapper>

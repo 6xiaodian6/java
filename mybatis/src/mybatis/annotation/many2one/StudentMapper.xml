@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.annotation.many2one.StudentMapper">
+    <!--Student级联查询方法，多对一查询-->
+    <resultMap id="resultMarkMap" type="mybatis.annotation.many2one.Mark">
+        <id property="mark" column="mark"/>
+        <result property="year" column="year"/>
+        <result property="sid" column="sid"/>
+        <association property="student"  javaType="mybatis.annotation.many2one.Student">
+            <id property="id" column="id"/>
+            <result property="age" column="age"/>
+            <result property="name" column="name"/>
+            <result property="gender" column="gender"/>
+            <result property="address" column="address"/>
+        </association>
+    </resultMap>
+    <select id="getMark" parameterType="int" resultMap="resultMarkMap">
+        SELECT S.id, age, name, gender, address,M.MARK,YEAR, sid
+        FROM student S,mark M
+        WHERE S.id=M.sid AND M.sid=#{sid}
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.annotation.one2many.StudentMapper">
+    <!--Student级联查询方法配置-->
+    <resultMap id="resultStudentMap" type="mybatis.annotation.one2many.Student">
+        <!--这里的ID属性是对应数据库里面的主键字段的,property是java程序里面的属性名称,column是数据库里面表的列-->
+        <id property="id" column="id"/>
+        <!--result属性是数据库里面对应的非主键字段的-->
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="gender" column="gender"/>
+        <result property="address" column="address"/>
+        <!--collection属性是类中的集合属性，一般都是一个类中引用另一个类对应的参数，而这里需要使用resultMap作为result里面的column，这resultMap的值需要在后续的配置中有这样的一个ID才可以正常使用-->
+        <collection property="marks" resultMap="mark"/>
+        <!--下面这种方式是直接内置的集合设置-->
+        <!--<collection property="marks" ofType="mybatis.annotation.one2many.Mark" column="id" >-->
+            <!--<result property="sid" column="sid"/>-->
+            <!--<result property="year" column="year"/>-->
+            <!--<result property="mark" column="mark"/>-->
+        <!--</collection>-->
+    </resultMap>
+    <resultMap id="mark" type="mybatis.annotation.one2many.Mark">
+        <result property="sid" column="sid"/>
+        <result property="year" column="year"/>
+        <result property="mark" column="mark"/>
+    </resultMap>
+    <select id="getStudent" resultMap="resultStudentMap" parameterType="int">
+        SELECT S.*,M.*
+        FROM student S,mark M
+        WHERE S.id=M.sid AND id=#{id}
+    </select>
+</mapper>

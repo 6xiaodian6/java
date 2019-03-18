@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.annotation.many2many.Student">
+    <parameterMap id="parameterStudentMap" type="Student">
+        <parameter property="id"/>
+        <parameter property="age"/>
+        <parameter property="name"/>
+        <parameter property="gender"/>
+        <parameter property="address"/>
+    </parameterMap>
+
+    <insert id="insertStudent" parameterMap="parameterStudentMap">
+        INSERT INTO student (age, name, gender, address)
+        VALUES (#{age},#{name},#{gender},#{address})
+    </insert>
+
+    <resultMap id="resultStudent" type="Student">
+        <result property="id" column="id"/>
+        <result property="age" column="age"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="address" column="address"/>
+        <collection property="marks" column="sid" select="mybatis.annotation.many2many.Mark.getMarksById"/>
+    </resultMap>
+
+    <select id="getStudent" parameterType="int" resultMap="resultStudent">
+        SELECT *
+        FROM student
+        WHERE id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.annotation.crud.IStudent">
+    <select id="getStudent" parameterType="int" resultType="mybatis.annotation.crud.Student">
+        SELECT *
+        FROM student
+        WHERE id = #{userId}
+    </select>
+
+    <insert id="insertStudent" parameterType="Student">
+        INSERT INTO student(AGE,NAME, GENDER, ADDRESS)
+        VALUES(#{age },#{name},#{gender},#{address})
+    </insert>
+
+    <select id="getStudentList" resultType="mybatis.annotation.crud.Student">
+        SELECT * FROM student
+    </select>
+
+    <update id="updateStudent" parameterType="Student">
+        UPDATE student
+        SET
+        name = #{name },
+        age = #{age },
+        gender = #{gender},
+        address = #{address}
+    </update>
+    <delete id="deleteStudent" parameterType="int">
+        DELETE FROM student WHERE id = #{id}
+    </delete>
+</mapper>
